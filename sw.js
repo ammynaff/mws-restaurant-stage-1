@@ -10,7 +10,6 @@ var allCaches = [
 ];
 
 
-/** At Service Worker Install time, cache all static assets */
 self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(staticCacheName).then(function(cache) {
@@ -29,10 +28,9 @@ self.addEventListener('install', function(event) {
     );
 })
 
-/** Hijack fetch requests and respond accordingly */
 self.addEventListener('fetch', function(event) {
 
-    // Default behavior: respond with cached elements, if any, falling back to network.
+
     event.respondWith(
         caches.match(event.request).then(function(response) {
             return response || fetch(event.request);
